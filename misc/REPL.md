@@ -60,6 +60,14 @@ Rust REPL
     >> PI.cos()
     -1.0
 
+    >> let mut vec: Vec<String> = Vec::new();
+    >> vec.push(String::from("こんにちは"));
+    >> vec.push(String::from("世界"));
+    >> vec
+    ["こんにちは", "世界"]
+    >> vec.join("、")
+    "こんにちは、世界"
+
 度数法からラジアンへ変換
 
     >> use std::f64::consts::PI;
