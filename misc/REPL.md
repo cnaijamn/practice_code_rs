@@ -34,6 +34,10 @@ Rust REPL
     >> :type x
     x: i32
 
+    >> let x = Some(24);
+    >> :type x
+    x: Option<i32>
+
     >> :dep regex = "1"
     >> use regex::Regex;
     >> Regex::new(r"\d+").unwrap().is_match("abc123")
@@ -72,16 +76,16 @@ Rust REPL
 
     >> use std::f64::consts::PI;
     >> for deg in [0.0, 30.0, 45.0, 60.0, 90.0] {
-        let rad = deg * PI / 180.0;
-        println!("{:>3}°  sin={:.3}  cos={:.3}", deg, rad.sin(), rad.cos());
-    }
+           let rad = deg * PI / 180.0;
+           println!("{:>3}°  sin={:.3}  cos={:.3}", deg, rad.sin(), rad.cos());
+       }
       0°  sin=0.000  cos=1.000
      30°  sin=0.500  cos=0.866
      45°  sin=0.707  cos=0.707
      60°  sin=0.866  cos=0.500
      90°  sin=1.000  cos=0.000
 
-REPL時にサンプルや学習コードに`Debug``Clone``PartialEq`を付けると非常に便利。  
+REPL時にサンプルや学習コードに`Debug``Clone``PartialEq`を付けると非常に便利。
 
     >> #[derive(Debug, Clone, PartialEq)]
        struct Aaa { name: String }
@@ -95,6 +99,59 @@ REPL時にサンプルや学習コードに`Debug``Clone``PartialEq`を付ける
     true
     >> a != b
     false
+
+パターンとマッチング
+--------------------
+
+    >> let x = 2;
+    >> match x {
+           1 => println!("one"),
+           2 => println!("two"),
+           3 => println!("three"),
+           _ => println!("other"),
+       }
+    two
+
+    >> let x = Some(5);
+    >> let y = 10;
+    >> match x {
+           Some(50) => println!("50!"),
+           Some(y) => println!("y is {y}!"),
+           _ => println!("x is {:?}...", x),
+       }
+    y is 5!
+
+    >> let x = 2;
+    >> match x {
+           1 | 2 => println!("one or two : {x}"),
+           3 => println!("three"),
+           _ => println!("other"),
+       }
+    one or two : 2
+
+    >> let x = 2;
+    >> match x {
+           1..=5 => println!("1~5 : {x}"),
+           _ => println!("other"),
+       }
+    1~5 : 2
+
+    >> let x = 'な';
+    >> match x {
+           'a'..='n' => println!("{x}!!"),
+           'あ'..='の' => println!("{x}！"),
+           _ => println!("{x}??"),
+       }
+    な！
+
+    >> struct P { x: i32, y: i32, }
+    >> let p = P { x: 10, y: 20 };
+    >> match p {
+           P { x, y: 0 } => println!("Zero"),
+           P { x: 0, y } => println!("# x is zero, y = {y}"),
+           P { x, y } => println!("(x, y) : ({x}, {y})"),
+       }
+    (x, y) : (10, 20)
 
 クレート(Crate)を使う
 ---------------------
@@ -110,7 +167,6 @@ REPL時にサンプルや学習コードに`Debug``Clone``PartialEq`を付ける
     >> let id = Uuid::new_v4();
     >> id
     c080c2dd-0c5b-4943-852c-da4669b50aea
-
 
 **_TODO_**
 ----------
