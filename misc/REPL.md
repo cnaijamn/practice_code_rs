@@ -44,6 +44,10 @@ Rust REPL
     true
 
     >> :dep rand = "0.10"
+    >> rand::random_range(0..=255)
+    31
+    >> rand::random::<f32>()
+    0.51869714
     >> let n: u8 = rand::random_range(0..=255);
     >> n
     104
